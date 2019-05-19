@@ -76,11 +76,11 @@ def tcrecs_generate(tcrecs_in='cmip5', dist='lognorm', n=1000, correlated=True,
 
     Output:
         (n, 2) array of sampled ECS, TCR pairs."""
-    
+    import pkgutil
+
     if type(tcrecs_in) is str and tcrecs_in=='cmip5':
-        filepath = os.path.join(os.path.dirname(__file__),
-          'tcrecs/cmip5tcrecs.csv')
-        tcrecs_in = np.loadtxt(filepath, delimiter=',', skiprows=3)
+        file_handle = pkgutil.get_data('fair', 'tools/tcrecs/cmip5tcrecs.csv')
+        tcrecs_in = np.loadtxt(file_handle, delimiter=',', skiprows=3)
     try:
         assert(type(tcrecs_in) is np.ndarray)
         assert(tcrecs_in.shape[1] == 2)
